@@ -18,7 +18,7 @@ class UserMiddleware
     {
 
         if (! auth()->user()->hasRole(2)) {
-            return redirect('/');
+            return redirect('/admin/dashboard');
         }
     
         return $next($request);
