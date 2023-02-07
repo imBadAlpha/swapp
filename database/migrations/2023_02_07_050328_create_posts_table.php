@@ -16,11 +16,14 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->unsignedBigInteger('user_id');
             $table->text('description');
             $table->integer('offer_count')->default(0);
             $table->integer('like_count')->default(0);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
+            
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
