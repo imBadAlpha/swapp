@@ -1449,4 +1449,34 @@ h6 {
       background-color: #212529;
       color: #fff;
   }
+
+  .profile .profile-card h2 {
+    color: #f6f6fe;
+  }
+  
+  .profile .profile-card .social-links a {
+    color: #f6f6fe;
+  }
+  
+  .profile .profile-card .social-links a:hover {
+    color: #f6f6fe;
+  }
+  
+  
+  .profile .profile-overview .card-title {
+    color: #f6f6fe;
+  }
+  
+  .profile .profile-overview .label {
+    color: #f6f6fe;
+  }
+  
+  .profile .profile-edit label {
+    color: #f6f6fe;
+  }
+
+  .profile .nav .nav-item .nav-link {
+    color: #f6f6fe;
+  }
+  
 }

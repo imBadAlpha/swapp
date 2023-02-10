@@ -6,6 +6,7 @@ use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Admin\PostsController;
 use App\Http\Controllers\Admin\OffersController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,9 +24,7 @@ Route::get('/', function () {
 });
 
 // Routes for Users
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified', 'user'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified', 'user'])->name('dashboard');
 
 Route::middleware(['auth', 'verified', 'user'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
