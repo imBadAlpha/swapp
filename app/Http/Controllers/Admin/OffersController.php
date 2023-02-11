@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Offer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OffersController extends Controller
 {
@@ -16,8 +17,9 @@ class OffersController extends Controller
     public function index()
     {
         $offers = Offer::all();
+        $user = Auth::user();
 
-        return view('admin.offers.index', compact('offers'));
+        return view('admin.offers.index', compact('offers', 'user'));
     }
 
     /**

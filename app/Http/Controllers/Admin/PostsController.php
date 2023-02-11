@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth; 
 
 class PostsController extends Controller
 {
@@ -16,8 +17,9 @@ class PostsController extends Controller
     public function index()
     {
         $posts = Post::with('user')->get();
+        $user = Auth::user();
 
-        return view('admin.posts.index', compact('posts'));
+        return view('admin.posts.index', compact('posts', 'user'));
     }
 
     /**

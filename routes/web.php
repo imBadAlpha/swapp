@@ -34,9 +34,7 @@ Route::middleware(['auth', 'verified', 'user'])->group(function () {
 
 // Routes for Admin
 Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.')->group(function() {
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    });
+    Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::resource('posts', PostsController::class);
     Route::resource('offers', OffersController::class);
 

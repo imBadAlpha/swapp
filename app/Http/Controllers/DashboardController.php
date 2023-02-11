@@ -17,7 +17,13 @@ class DashboardController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('dashboard', compact('user'));
+        $current_page = 'Dashboard';
+        
+        if (auth()->user()->hasRole(1)){
+            return view('admin.dashboard', compact('user'));
+        } else {
+            return view('dashboard', compact('user'));
+        }
     }
 
     /**

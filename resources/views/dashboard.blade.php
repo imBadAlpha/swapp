@@ -1,4 +1,4 @@
-@include('layouts.head')
+@include('layouts.head', ['current_page' => 'Dashboard'])
 
     @include('layouts.nav')
 
