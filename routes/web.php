@@ -24,12 +24,15 @@ Route::get('/', function () {
 });
 
 // Routes for Users
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified', 'user'])->name('dashboard');
 
 Route::middleware(['auth', 'verified', 'user'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/profile/upload-image', [ProfileController::class, 'uploadImage'])->name('profile.upload-image');
+    Route::post('/profile/reset-image', [ProfileController::class, 'resetImage'])->name('profile.reset-image');
 });
 
 // Routes for Admin

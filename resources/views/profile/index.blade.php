@@ -22,9 +22,8 @@
             <div class="card">
                 <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-                <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-                <h2>Kevin Anderson</h2>
-                <h3>Web Designer</h3>
+                <img src="{{ asset('images/'. $user->profile_picture) }}" alt="Profile" class="rounded-circle">
+                <h2>{{ $user->first_name }} {{ $user->last_name }}</h2>
                 <div class="social-links mt-2">
                     <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
                     <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
@@ -70,7 +69,7 @@
 
                     <div class="row">
                         <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                        <div class="col-lg-9 col-md-8">Kevin Anderson</div>
+                        <div class="col-lg-9 col-md-8">{{ $user->first_name }} {{ $user->last_name }}</div>
                     </div>
 
                     <div class="row">
@@ -107,15 +106,63 @@
 
                     <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
+                    <!-- Modal for Uploading Profile Image -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                        <form action="profile/upload-image" method="post" enctype="multipart/form-data"> 
+                            @csrf       
+                            <div class="modal-content">
+                                <div class="container-fluid">
+                                    <div class="row justify-content-center align-items-center g-2">
+                                        <div class="col-lg-6">
+                                            <input type="file" name="image">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Upload</button>
+                            </div>
+                        </form>
+                        </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal for Resetting Image -->
+                    <div class="modal fade" id="resetImageModal" tabindex="-1" aria-labelledby="exampleImageModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                        <form action="profile/reset-image" method="post" enctype="multipart/form-data"> 
+                            @csrf       
+                            <div class="modal-content">
+                                <div class="container-fluid">
+                                    <div class="row justify-content-center align-items-center g-2">
+                                        <div class="col-lg-6">
+                                            <h3>You will be deleting your current profile picture.</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Proceed</button>
+                            </div>
+                        </form>
+                        </div>
+                        </div>
+                    </div>
+
                     <!-- Profile Edit Form -->
                     <form>
                         <div class="row mb-3">
                         <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                         <div class="col-md-8 col-lg-9">
-                            <img src="assets/img/profile-img.jpg" alt="Profile">
+                            <img src="{{ asset('images/'. $user->profile_picture) }}" alt="Profile">
                             <div class="pt-2">
-                            <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
-                            <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
+                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <i class="bi bi-upload"></i>
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#resetImageModal">
+                                <i class="bi bi-trash"></i>
+                            </button>
                             </div>
                         </div>
                         </div>
@@ -123,7 +170,7 @@
                         <div class="row mb-3">
                         <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
                         <div class="col-md-8 col-lg-9">
-                            <input name="fullName" type="text" class="form-control" id="fullName" value="Kevin Anderson">
+                            <input name="fullName" type="text" class="form-control" id="fullName" value="{{ $user->first_name }} {{ $user->last_name }}">
                         </div>
                         </div>
 

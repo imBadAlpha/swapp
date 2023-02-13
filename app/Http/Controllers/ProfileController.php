@@ -57,4 +57,32 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function uploadImage(Request $request)
+    {
+        $user = Auth::user();
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $image = $request->file('image');
+        $imageName = time().'.'.$image->extension();
+        $image->move(public_path('images'), $imageName);
+
+        $user->profile_picture = $imageName;
+        $user->save();
+
+        return back()
+            ->with('success','Image Uploaded successfully.')
+            ->with('path',$imageName);
+    }
+
+    public function resetImage()
+    {
+        $user = Auth::user();
+        $user->profile_picture = 'placeholder_image.jpg';
+        $user->save();
+
+        return back()->with('success', 'Profile picture has been reset to default.');
+    }
 }
