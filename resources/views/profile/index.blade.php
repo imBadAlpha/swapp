@@ -1,6 +1,6 @@
 @include('layouts.head', ['current_page' => 'Profile'])
 
-    @include('layouts.nav')
+    @include('layouts.nav', ['current_page' => 'Profile'])
     
     <main id="main" class="main">
 
@@ -108,45 +108,47 @@
 
                     <!-- Modal for Uploading Profile Image -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                        <form action="profile/upload-image" method="post" enctype="multipart/form-data"> 
-                            @csrf       
-                            <div class="modal-content">
-                                <div class="container-fluid">
-                                    <div class="row justify-content-center align-items-center g-2">
-                                        <div class="col-lg-6">
-                                            <input type="file" name="image">
+                        <div class="modal-dialog bg-light text-dark">
+                            <form action="profile/upload-image" method="post" enctype="multipart/form-data"> 
+                                @csrf       
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Upload Profile Picture</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="modal-content">
+                                        <input type="file" class="form-control" name="image"/>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-primary">Upload</button>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Upload</button>
-                            </div>
-                        </form>
-                        </div>
+                                
+                            </form>
                         </div>
                     </div>
 
                     <!-- Modal for Resetting Image -->
                     <div class="modal fade" id="resetImageModal" tabindex="-1" aria-labelledby="exampleImageModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                        <form action="profile/reset-image" method="post" enctype="multipart/form-data"> 
-                            @csrf       
-                            <div class="modal-content">
-                                <div class="container-fluid">
-                                    <div class="row justify-content-center align-items-center g-2">
-                                        <div class="col-lg-6">
-                                            <h3>You will be deleting your current profile picture.</h3>
+                        <div class="modal-dialog bg-light text-dark">
+                            <form action="profile/reset-image" method="post" enctype="multipart/form-data"> 
+                                @csrf 
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Delete Profile Picture</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div> 
+                                <div class="modal-body">
+                                    <div class="modal-content">
+                                        You will be deleting your current profile picture.
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                            <button type="submit" class="btn btn-primary">Proceed</button>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Proceed</button>
-                            </div>
-                        </form>
-                        </div>
+                                </div> 
+                            </form>
                         </div>
                     </div>
 

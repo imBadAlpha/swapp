@@ -1,6 +1,6 @@
 @include('layouts.head', ['current_page' => 'Dashboard'])
 
-    @include('layouts.nav')
+    @include('layouts.nav', ['current_page' => 'Dashboard'])
 
     <main id="main" class="main">
 
