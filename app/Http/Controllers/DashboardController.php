@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Post;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -17,12 +18,15 @@ class DashboardController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $posts = Post::where('user_id', '!=', Auth::id())
+            ->with('user')
+            ->paginate(5);
         $current_page = 'Dashboard';
         
         if (auth()->user()->hasRole(1)){
             return view('admin.dashboard', compact('user'));
         } else {
-            return view('dashboard', compact('user'));
+            return view('dashboard', compact('user', 'posts'));
         }
     }
 

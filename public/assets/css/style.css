@@ -712,6 +712,18 @@ h6 {
   border-radius: 4px;
 }
 
+.dashboard_btn {
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 600;
+  color: #4154f1;
+  transition: 0.3;
+  background: #f6f9ff;
+  padding: 10px 15px;
+  border-radius: 4px;
+}
+
 .sidebar-nav .nav-link i {
   font-size: 16px;
   margin-right: 10px;
@@ -1477,6 +1489,11 @@ h6 {
 
   .profile .nav .nav-item .nav-link {
     color: #f6f6fe;
+  }
+
+  .dashboard_btn {
+    color: #fff;
+    background: #012970;
   }
   
 }

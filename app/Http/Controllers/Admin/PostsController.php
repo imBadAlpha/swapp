@@ -19,7 +19,11 @@ class PostsController extends Controller
         $posts = Post::with('user')->get();
         $user = Auth::user();
 
-        return view('admin.posts.index', compact('posts', 'user'));
+        if (auth()->user()->hasRole(1)){
+            return view('admin.posts.index', compact('posts', 'user'));
+        } else {
+            return view('posts.index', compact('posts', 'user'));
+        }
     }
 
     /**
@@ -40,7 +44,13 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $post = new Post;
+        $post->title = $request->input('title');
+        $post->user_id = Auth::id();
+        $post->description = $request->input('description');
+        $post->save();
+    
+        return redirect()->route('dashboard')->with('success', 'Post added successfully.');
     }
 
     /**

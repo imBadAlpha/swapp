@@ -46,8 +46,8 @@
                       <tr>
                         <th scope="col">#</th>
                         <th scope="col">Title</th>
-                        <th scope="col">Description</th>
                         <th scope="col">User</th>
+                        <th scope="col">Date</th>
                         <th scope="col">Status</th>
                         <th scope="col">Actions</th>
                       </tr>
@@ -57,8 +57,8 @@
                       <tr>
                         <th scope="row">{{ $post->id }}</th>
                         <td>{{ $post->title }}</td>
-                        <td>{{ $post->description }}</td>
                         <td>{{ $post->user->first_name }} {{ $post->user->last_name }}</td>
+                        <td>{{ $post->created_at}}</td>
                         <td><span class="badge {{ $post->status == 'active' ? 'bg-warning' : 'bg-danger' }}">{{ $post->status }}</span></td>
                       </tr>
                       @endforeach

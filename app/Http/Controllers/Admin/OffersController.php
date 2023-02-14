@@ -19,7 +19,11 @@ class OffersController extends Controller
         $offers = Offer::all();
         $user = Auth::user();
 
-        return view('admin.offers.index', compact('offers', 'user'));
+        if (auth()->user()->hasRole(1)){
+            return view('admin.offers.index', compact('offers', 'user'));
+        } else {
+            return view('offers.index', compact('offers', 'user'));
+        }
     }
 
     /**

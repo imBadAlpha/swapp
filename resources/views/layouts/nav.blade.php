@@ -240,13 +240,7 @@
                 <span>Dashboard</span>
             </a>
         </li><!-- End Dashboard Nav -->
-
-        <li class="nav-item">
-            <a class="nav-link @if($current_page == 'Post an Item') active @else collapsed @endif" href="dashboard" >
-                <i class="bi bi-postcard-heart"></i>
-                <span>Post an Item</span>
-            </a>
-        </li><!-- End Dashboard Nav -->
+        
 
         <li class="nav-item">
             <a class="nav-link @if($current_page == 'My Posts') active @else collapsed @endif" href="dashboard" >

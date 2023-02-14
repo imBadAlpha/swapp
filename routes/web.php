@@ -27,6 +27,8 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified', 'user'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('posts', PostsController::class);
+    Route::resource('offers', OffersController::class);
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
