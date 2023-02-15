@@ -15,12 +15,12 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
         $posts = Post::where('user_id', '!=', Auth::id())
             ->with('user')
-            ->paginate(5);
+            ->paginate(10);
         $current_page = 'Dashboard';
         
         if (auth()->user()->hasRole(1)){

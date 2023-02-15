@@ -1290,6 +1290,11 @@ h6 {
   border-radius: 5px;
 }
 
+.pagination {
+  width: 100%;
+  height: fit-content;
+}
+
 /* Dark Mode Styles */
 
 @media (prefers-color-scheme: dark) {

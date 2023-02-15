@@ -117,8 +117,10 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="modal-content">
-                                        <input type="file" class="form-control" name="image"/>
-
+                                        <div class="form-group">
+                                            <label for="image">Item Image</label>
+                                            <input type="file" class="form-control" name="image"/>
+                                          </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                             <button type="submit" class="btn btn-primary">Upload</button>

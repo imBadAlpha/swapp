@@ -48,6 +48,17 @@ class PostsController extends Controller
         $post->title = $request->input('title');
         $post->user_id = Auth::id();
         $post->description = $request->input('description');
+
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10000',
+        ]);
+
+        $image = $request->file('image');
+        $imageName = time().'.'.$image->extension();
+        $image->move(public_path('images'), $imageName);
+
+        $post->image = $imageName;
+
         $post->save();
     
         return redirect()->route('dashboard')->with('success', 'Post added successfully.');

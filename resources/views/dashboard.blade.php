@@ -23,6 +23,11 @@
                       <label for="description">Description</label>
                       <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
                   </div>
+                  <div class="form-group">
+                    <label for="image">Item Image</label>
+                    <input type="file" class="form-control" name="image"/>
+                  </div>
+                  
                   <input type="hidden" name="user_id" value="{{ Auth::id() }}">
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -47,32 +52,26 @@
         <section class="section dashboard">
           
           <div class="row">
+            
             <!-- Left side columns -->
             <div class="col-lg-8">
-              <div class="row">
-                <div class="col-lg-12 text-center">
-                  <a class="dashboard_btn mb-3" href="#" data-bs-toggle="modal" data-bs-target="#postItemModal">
-                    <i class="bi bi-postcard-heart"></i>
-                    <span class="">Post an Item</span>
+              <div class="row mb-3 justify-content-center">
+                <div class="col-lg-8">
+                  <a class="dashboard_btn " href="#" data-bs-toggle="modal" data-bs-target="#postItemModal">
+                    <i class="bi bi-postcard-heart"></i> | <span class="">Post an Item</span>
                   </a>
                 </div>
               </div>
               
               @foreach($posts as $post)
 
-              <div class="row">
-                <!-- Customers Card -->
-                <div class="col-xxl-4 col-xl-12">
-    
+              <div class="row justify-content-center">
+                <!-- Posts Card -->
+                
+                <div class="col-lg-8">
                   <div class="card info-card customers-card">
-    
-                    <div class="filter">
-                      <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                    </div>
-    
                     <div class="card-body">
                       <h5 class="card-title">{{ substr($post->user->first_name, 0, 1) }}. {{ $post->user->last_name }} | {{ $post->created_at }}</span></h5>
-    
                       <div class="d-flex align-items-center">
                         <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                           <i class="bi bi-people"></i>
@@ -80,17 +79,42 @@
                         <div class="ps-3">
                           <h6>{{ $post->title }}</h6>
                           <span class="text-muted small pt-2 ps-1">{{ $post->description }}</span>
-    
                         </div>
                       </div>
-    
                     </div>
                   </div>
     
-                </div><!-- End Customers Card -->
+                </div>
+                
+                <!-- End Posts Card -->
     
               </div>
               @endforeach
+
+              <div class="row justify-content-center">
+                <div class="col-lg-8" >
+                  {{ $posts->links() }}
+                </div>
+              </div>
+
+              <script>
+                $('#per_page, #filter').on('change', function() {
+                    $('#filter-form').submit();
+                });
+            
+                $('#filter-form').on('submit', function(e) {
+                    e.preventDefault();
+            
+                    $.ajax({
+                        type: 'GET',
+                        url: '{{ route('dashboard') }}',
+                        data: $(this).serialize(),
+                        success: function(data) {
+                            $('table tbody').html(data);
+                        }
+                    });
+                });
+            </script>
             </div><!-- End Left side columns -->
     
             <!-- Right side columns -->
