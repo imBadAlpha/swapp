@@ -44,25 +44,26 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10000',
+        ]);
+
+        $imageName = time().'.'.$request->image->extension();
+        $request->image->move(public_path('images'), $imageName);
+
         $post = new Post;
         $post->title = $request->input('title');
         $post->user_id = Auth::id();
         $post->description = $request->input('description');
-
-        $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10000',
-        ]);
-
-        $image = $request->file('image');
-        $imageName = time().'.'.$image->extension();
-        $image->move(public_path('images'), $imageName);
-
         $post->image = $imageName;
 
         $post->save();
-    
+        
         return redirect()->route('dashboard')->with('success', 'Post added successfully.');
     }
+
 
     /**
      * Display the specified resource.

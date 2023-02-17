@@ -13,7 +13,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <form action="{{ route('posts.store') }}" method="POST">
+                <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
                   @csrf
                   <div class="form-group">
                       <label for="title">Title</label>
@@ -23,10 +23,8 @@
                       <label for="description">Description</label>
                       <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
                   </div>
-                  <div class="form-group">
-                    <label for="image">Item Image</label>
-                    <input type="file" class="form-control" name="image"/>
-                  </div>
+                  <label for="image">Item Image</label>
+                  <input type="file" class="form-control" name="image" required/>
                   
                   <input type="hidden" name="user_id" value="{{ Auth::id() }}">
                   <div class="modal-footer">
@@ -55,6 +53,15 @@
             
             <!-- Left side columns -->
             <div class="col-lg-8">
+              <div class="row mb-3 justify-content-center">
+                <div class="col-lg-8">
+                @if ($message = Session::get('success'))
+                  <div class="alert alert-success alert-block">
+                      <strong>{{ $message }}</strong>
+                  </div>
+                @endif
+                </div>
+              </div>
               <div class="row mb-3 justify-content-center">
                 <div class="col-lg-8">
                   <a class="dashboard_btn " href="#" data-bs-toggle="modal" data-bs-target="#postItemModal">
