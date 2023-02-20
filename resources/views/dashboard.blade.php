@@ -78,14 +78,16 @@
                 <div class="col-lg-8">
                   <div class="card info-card customers-card">
                     <div class="card-body">
-                      <h5 class="card-title">{{ substr($post->user->first_name, 0, 1) }}. {{ $post->user->last_name }} | {{ $post->created_at }}</span></h5>
-                      <div class="d-flex align-items-center">
-                        <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                          <i class="bi bi-people"></i>
-                        </div>
-                        <div class="ps-3">
+                      <h5 class="card-title">{{ substr($post->user->first_name, 0, 1) }}. {{ $post->user->last_name }} <span class="text-muted small pt-2 ps-1"> {{ timeElapsedString($post->created_at) }} </span> </h5>
+                      <div class="row">
+                        <div class="col-lg-12 ps-3">
                           <h6>{{ $post->title }}</h6>
-                          <span class="text-muted small pt-2 ps-1">{{ $post->description }}</span>
+                          <span class="text-muted small py-2 ps-1">{{ $post->description }}</span>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-12"> 
+                          <img src="{{ 'images/' . $post->image }}" alt="{{ $post->title }}" class="d-block w-100 rounded">
                         </div>
                       </div>
                     </div>

@@ -7,9 +7,12 @@ use App\Models\User;
 use App\Models\Post;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+require_once(app_path().'/helpers.php');
 
 class DashboardController extends Controller
 {
+    
+    
     /**
      * Display a listing of the resource.
      *
@@ -95,4 +98,6 @@ class DashboardController extends Controller
     {
         //
     }
+
+    
 }
