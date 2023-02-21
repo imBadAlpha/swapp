@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Offer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+require_once(app_path().'/helpers.php');
 
 class OffersController extends Controller
 {

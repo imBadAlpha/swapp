@@ -2,6 +2,11 @@
 
 use Carbon\Carbon;
 
+/** 
+ * This function shows the date and time of the posts
+ * as *time* ago format...
+ */
+
 function timeElapsedString($datetime, $full = false) {
     $now = Carbon::now();
     $ago = Carbon::parse($datetime);

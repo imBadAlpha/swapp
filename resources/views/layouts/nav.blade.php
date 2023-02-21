@@ -243,14 +243,14 @@
         
 
         <li class="nav-item">
-            <a class="nav-link @if($current_page == 'My Posts') active @else collapsed @endif" href="dashboard" >
+            <a class="nav-link @if($current_page == 'My Posts') active @else collapsed @endif" href="posts" >
                 <i class="bi bi-bag-plus-fill"></i>
                 <span>My Posts</span>
             </a>
         </li><!-- End Dashboard Nav -->
 
         <li class="nav-item">
-            <a class="nav-link @if($current_page == 'My Offer') active @else collapsed @endif" href="dashboard" >
+            <a class="nav-link @if($current_page == 'My Offers') active @else collapsed @endif" href="offers" >
                 <i class="bi bi-handbag"></i>
                 <span>My Offers</span>
             </a>

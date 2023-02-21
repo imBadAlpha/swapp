@@ -24,7 +24,6 @@ Route::get('/', function () {
 });
 
 // Routes for Users
-
 Route::middleware(['auth', 'verified', 'user'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('posts', PostsController::class);

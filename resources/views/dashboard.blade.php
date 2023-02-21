@@ -41,7 +41,7 @@
           <h1>Dashboard</h1>
           <nav>
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+              <li class="breadcrumb-item"><a href="dashboard">Home</a></li>
               <li class="breadcrumb-item active">Dashboard</li>
             </ol>
           </nav>
@@ -87,7 +87,25 @@
                       </div>
                       <div class="row">
                         <div class="col-lg-12"> 
-                          <img src="{{ 'images/' . $post->image }}" alt="{{ $post->title }}" class="d-block w-100 rounded">
+                          <img src="{{ 'images/' . $post->image }}" alt="{{ $post->title }}" class="d-block w-100 rounded my-2">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <span class="text-muted small pt-2 ps-1">{{ $post->like_count }} Likes</span>
+                          <span class="text-muted small pt-2 ps-1">{{ $post->offer_count }} Offers</span>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="d-grid mt-3">
+                            <button class="btn btn-primary" type="button"><i class="bi bi-hand-thumbs-up"></i> Like</button>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 text-end">
+                          <div class="d-grid mt-3">
+                            <button class="btn btn-primary" type="button"><i class="bi bi-briefcase"></i> Offer</button>
+                          </div>
                         </div>
                       </div>
                     </div>

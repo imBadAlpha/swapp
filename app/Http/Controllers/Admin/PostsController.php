@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; 
+require_once(app_path().'/helpers.php');
 
 class PostsController extends Controller
 {
@@ -16,12 +17,17 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('user')->get();
         $user = Auth::user();
 
         if (auth()->user()->hasRole(1)){
+            $posts = Post::with('user')->get();
+
             return view('admin.posts.index', compact('posts', 'user'));
         } else {
+            $posts = Post::where('user_id', Auth::id())
+             ->with('user')
+             ->paginate(10);
+
             return view('posts.index', compact('posts', 'user'));
         }
     }
