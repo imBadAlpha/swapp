@@ -115,4 +115,20 @@ class PostsController extends Controller
     {
         //
     }
+
+    public function likePost($id)
+    {
+        $post = Post::findOrFail($id);
+        $post->like_count += 1;
+        $post->save();
+        return response()->json(['success' => true, 'like_count' => $post->like_count]);
+    }
+
+    public function unlikePost($id)
+    {
+        $post = Post::findOrFail($id);
+        $post->like_count -= 1;
+        $post->save();
+        return response()->json(['success' => true, 'like_count' => $post->like_count]);
+    }
 }

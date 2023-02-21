@@ -92,19 +92,22 @@
                       </div>
                       <div class="row">
                         <div class="col-lg-6">
-                          <span class="text-muted small pt-2 ps-1">{{ $post->like_count }} Likes</span>
+                          <span class="text-muted small pt-2 ps-1">{{ $post->likers->count() }} Likes</span>
                           <span class="text-muted small pt-2 ps-1">{{ $post->offer_count }} Offers</span>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-lg-6">
-                          <div class="d-grid mt-3">
-                            <button class="btn btn-primary" type="button"><i class="bi bi-hand-thumbs-up"></i> Like</button>
-                          </div>
+                            <form action="like/{{ $post->id }}" method="POST">
+                              @csrf
+                              <div class="d-grid mt-3">
+                                <button class="btn {{ $post->likers->contains(Auth::user()) ? 'btn-primary' : 'btn-outline-primary' }}" type="submit"><i class="bi bi-hand-thumbs-up"></i> Like</button>
+                              </div>
+                            </form>
                         </div>
                         <div class="col-lg-6 text-end">
                           <div class="d-grid mt-3">
-                            <button class="btn btn-primary" type="button"><i class="bi bi-briefcase"></i> Offer</button>
+                            <button class="btn btn-outline-primary" type="button"><i class="bi bi-briefcase"></i> Offer</button>
                           </div>
                         </div>
                       </div>
@@ -124,24 +127,6 @@
                 </div>
               </div>
 
-              <script>
-                $('#per_page, #filter').on('change', function() {
-                    $('#filter-form').submit();
-                });
-            
-                $('#filter-form').on('submit', function(e) {
-                    e.preventDefault();
-            
-                    $.ajax({
-                        type: 'GET',
-                        url: '{{ route('dashboard') }}',
-                        data: $(this).serialize(),
-                        success: function(data) {
-                            $('table tbody').html(data);
-                        }
-                    });
-                });
-            </script>
             </div><!-- End Left side columns -->
     
             <!-- Right side columns -->

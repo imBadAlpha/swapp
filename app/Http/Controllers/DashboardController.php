@@ -5,14 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Post;
+use App\Models\Like;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 require_once(app_path().'/helpers.php');
 
 class DashboardController extends Controller
 {
-    
-    
     /**
      * Display a listing of the resource.
      *
@@ -24,6 +23,7 @@ class DashboardController extends Controller
         $posts = Post::where('user_id', '!=', Auth::id())
             ->with('user')
             ->paginate(10);
+        $likes = Like::get();
         $current_page = 'Dashboard';
         
         if (auth()->user()->hasRole(1)){
