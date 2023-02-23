@@ -14,11 +14,19 @@ class LikesController extends Controller
 
         if ($user->likedPosts()->where('post_id', $post->id)->exists()) {
             $user->likedPosts()->detach($post);
+            $message = 'unliked';
         } else {
             $user->likedPosts()->attach($post);
+            $message = 'liked';
             
         }
 
-        return redirect()->back();
+        $likeCount = $post->likers->count();
+
+        return response()->json([
+            'message' => $message,
+            'likeCount' => $likeCount,
+            'liked' => $user->likedPosts->contains($post),
+        ]);
     }
 }

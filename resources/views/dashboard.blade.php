@@ -92,16 +92,18 @@
                       </div>
                       <div class="row">
                         <div class="col-lg-6">
-                          <span class="text-muted small pt-2 ps-1">{{ $post->likers->count() }} Likes</span>
+                          <span class="text-muted small pt-2 ps-1" id="like-count-{{ $post->id }}">{{ $post->likers->count() }} Likes</span>
                           <span class="text-muted small pt-2 ps-1">{{ $post->offer_count }} Offers</span>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-lg-6">
-                            <form action="like/{{ $post->id }}" method="POST">
+                          <form action="/like/{{ $post->id }}" method="POST" class="like-form" data-post-id="{{ $post->id }}">
                               @csrf
                               <div class="d-grid mt-3">
-                                <button class="btn {{ $post->likers->contains(Auth::user()) ? 'btn-primary' : 'btn-outline-primary' }}" type="submit"><i class="bi bi-hand-thumbs-up"></i> Like</button>
+                                <button class="btn btn-outline-primary" type="submit">
+                                  <i class="bi bi-hand-thumbs-up"></i> Like
+                                </button>
                               </div>
                             </form>
                         </div>
@@ -115,12 +117,13 @@
                   </div>
     
                 </div>
-                
+
                 <!-- End Posts Card -->
     
               </div>
               @endforeach
 
+              
               <div class="row justify-content-center">
                 <div class="col-lg-8" >
                   {{ $posts->links() }}

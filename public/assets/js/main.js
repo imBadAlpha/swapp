@@ -319,4 +319,36 @@
 
 })();
 
+$(document).ready(function() {
+  $('.like-form').on('submit', function(event) {
+      event.preventDefault();
+      var form = $(event.target).closest('form');
+      var postId = form.data('post-id');
+      var formData = form.serialize();
+      
 
+      console.log("Hello");
+      
+      $.ajax({
+          url: '/like/' + postId + '?_=' + Date.now(),
+          type: 'POST',
+          data: formData,
+          success: function(data) {
+              // Update the button text and class based on the server response
+              if (data.liked) {
+                  form.find('button').removeClass('btn-outline-primary').addClass('btn-primary');
+                  form.find('button').html('<i class="bi bi-hand-thumbs-up"></i> Liked');
+              } else {
+                  form.find('button').removeClass('btn-primary').addClass('btn-outline-primary');
+                  form.find('button').html('<i class="bi bi-hand-thumbs-up"></i> Like');
+              }
+              
+              // Update the like count
+              $('#like-count-' + postId).text(data.likeCount + ' Likes');
+          },
+          error: function(xhr, status, error) {
+              // Handle errors
+          }
+      });
+  });
+});
