@@ -45,7 +45,28 @@ class OffersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10000',
+        ]);
+
+        $imageName = time().'.'.$request->image->extension();
+        $request->image->move(public_path('images'), $imageName);
+
+        $offer = new Offer;
+        $offer->title = $request->input('title');
+        $offer->user_id = Auth::id();
+        $offer->post_id = $request->input('post_id');
+        $offer->description = $request->input('description');
+        $offer->image = $imageName;
+
+        $offer->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Offer added successfully.'
+        ]);
     }
 
     /**

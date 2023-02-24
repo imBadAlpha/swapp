@@ -37,6 +37,8 @@
           </div>
         </div>
 
+        
+
         <div class="pagetitle">
           <h1>Dashboard</h1>
           <nav>
@@ -101,15 +103,52 @@
                           <form action="/like/{{ $post->id }}" method="POST" class="like-form" data-post-id="{{ $post->id }}">
                               @csrf
                               <div class="d-grid mt-3">
-                                <button class="btn btn-outline-primary" type="submit">
-                                  <i class="bi bi-hand-thumbs-up"></i> Like
+                                <button class="btn {{ $post->likers->contains(auth()->user()) ? 'btn-primary' : 'btn-outline-primary' }}" type="submit">
+                                  <i class="bi bi-hand-thumbs-up"></i> {{ $post->likers->contains(auth()->user()) ? 'Liked' : 'Like' }}
                                 </button>
                               </div>
                             </form>
                         </div>
-                        <div class="col-lg-6 text-end">
+                        <div class="col-lg-6">
                           <div class="d-grid mt-3">
-                            <button class="btn btn-outline-primary" type="button"><i class="bi bi-briefcase"></i> Offer</button>
+                            <button id="offer-btn-{{ $post->id }}" class="btn btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#offerItemModal{{ $post->id }}">
+                              <i class="bi bi-briefcase"></i> Offer
+                            </button>
+
+                            <!-- Modal for Offering an Item -->
+
+                            <div class="modal fade" id="offerItemModal{{ $post->id }}" tabindex="-1" aria-labelledby="offerItemModalLabel{{ $post->id }}" aria-hidden="true">
+                              <div class="modal-dialog text-dark">
+                              <div class="modal-content">
+                                  <div class="modal-header">
+                                  <h5 class="modal-title" id="offerItemModalLabel{{ $post->id }}">Offer An Item</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <form class="offer-form" action="{{ route('offers.store') }}" method="POST" enctype="multipart/form-data">
+                                      @csrf
+                                      <div class="form-group">
+                                          <label for="title">Title</label>
+                                          <input type="text" class="form-control" id="title" name="title" required>
+                                      </div>
+                                      <div class="form-group">
+                                          <label for="description">Description</label>
+                                          <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+                                      </div>
+                                      <label for="image">Item Image</label>
+                                      <input type="file" class="form-control" name="image" required/>
+                                      
+                                      <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+                                      <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Offer</button>
+                                      </div>
+                                    </form>
+                                  </div>
+                              </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>

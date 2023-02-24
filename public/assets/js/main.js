@@ -326,8 +326,6 @@ $(document).ready(function() {
       var postId = form.data('post-id');
       var formData = form.serialize();
       
-
-      console.log("Hello");
       
       $.ajax({
           url: '/like/' + postId + '?_=' + Date.now(),
@@ -352,3 +350,34 @@ $(document).ready(function() {
       });
   });
 });
+
+$(document).on('submit', 'form.offer-form', function(e) {
+      e.preventDefault();
+      var form = $(this);
+      var url = form.attr('action');
+      var postID = $(this).find('input[name="post_id"]').val();
+      var formData = new FormData(form[0]);
+
+      $.ajax({
+          url: url,
+          type: 'POST',
+          data: formData,
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          dataType: 'json',
+          async: false,
+          cache: false,
+          contentType: false,
+          processData: false,
+          success: function (data) {
+            $('#offerItemModal' + postID).modal('hide'); // close the modal
+            form.trigger('reset'); // clear the form
+            $('#offer-btn-' + postID).removeClass('btn-outline-primary').addClass('btn-primary');
+          },
+          error: function (xhr, status, error) {
+            console.log(xhr.responseText);
+          }
+  });
+});
+
