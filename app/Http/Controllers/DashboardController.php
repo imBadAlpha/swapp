@@ -24,6 +24,7 @@ class DashboardController extends Controller
             ->with('user')
             ->paginate(10);
         $likes = Like::get();
+
         $current_page = 'Dashboard';
         
         if (auth()->user()->hasRole(1)){

@@ -374,6 +374,7 @@ $(document).on('submit', 'form.offer-form', function(e) {
             $('#offerItemModal' + postID).modal('hide'); // close the modal
             form.trigger('reset'); // clear the form
             $('#offer-btn-' + postID).removeClass('btn-outline-primary').addClass('btn-primary');
+            $('#offer-btn-' + postID).html('<i class="bi bi-briefcase"></i> View Offer');
           },
           error: function (xhr, status, error) {
             console.log(xhr.responseText);

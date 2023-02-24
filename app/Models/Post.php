@@ -39,4 +39,9 @@ class Post extends Model
         return $this->belongsToMany(User::class, 'likes', 'post_id', 'user_id')->withTimestamps();
     }
 
+    public function hasOffer()
+    {
+        return $this->hasOne(Offer::class);
+    }
+
 }
