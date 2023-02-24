@@ -41,7 +41,9 @@ class Post extends Model
 
     public function hasOffer()
     {
-        return $this->hasOne(Offer::class);
+        $user_id = auth()->id();
+        $offer = Offer::where('post_id', $this->id)->where('user_id', $user_id)->first();
+        return $offer ? true : false;
     }
 
 }

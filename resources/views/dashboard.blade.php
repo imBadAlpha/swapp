@@ -111,8 +111,8 @@
                         </div>
                         <div class="col-lg-6">
                           <div class="d-grid mt-3">
-                            <button id="offer-btn-{{ $post->id }}" class="btn {{ $post->hasOffer ? 'btn-primary' : 'btn-outline-primary' }}" type="button" data-bs-toggle="modal" data-bs-target="#offerItemModal{{ $post->id }}">
-                              <i class="bi bi-briefcase"></i> {{ $post->hasOffer ? 'View Offer' : 'Offer' }}
+                            <button id="offer-btn-{{ $post->id }}" class="btn {{ $post->hasOffer(auth()->user()) ? 'btn-primary' : 'btn-outline-primary' }}" type="button" data-bs-toggle="modal" data-bs-target="#offerItemModal{{ $post->id }}">
+                              <i class="bi bi-briefcase"></i> {{ $post->hasOffer(auth()->user()) ? 'View Offer' : 'Offer' }}
                             </button>
 
                             <!-- Modal for Offering an Item -->
