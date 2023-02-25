@@ -87,7 +87,7 @@
                       </div>
                       <div class="row">
                         <div class="col-lg-12"> 
-                          <img src="{{ 'images/' . $post->image }}" alt="{{ $post->title }}" class="d-block w-100 rounded">
+                          <img src="{{ asset('storage/images/'. $post->image) }}" alt="{{ $post->title }}" class="d-block w-100 rounded">
                         </div>
                       </div>
                     </div>

@@ -57,7 +57,7 @@ class PostsController extends Controller
         ]);
 
         $imageName = time().'.'.$request->image->extension();
-        $request->image->move(public_path('images'), $imageName);
+        $request->image->storeAs('public/images', $imageName);
 
         $post = new Post;
         $post->title = $request->input('title');

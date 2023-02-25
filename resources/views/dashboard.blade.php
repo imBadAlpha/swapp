@@ -71,6 +71,7 @@
                   </a>
                 </div>
               </div>
+
               
               @foreach($posts as $post)
 
@@ -89,16 +90,18 @@
                       </div>
                       <div class="row">
                         <div class="col-lg-12"> 
-                          <img src="{{ 'images/' . $post->image }}" alt="{{ $post->title }}" class="d-block w-100 rounded my-2">
+                          <img src="{{ asset('storage/images/'. $post->image) }}" alt="{{ $post->title }}" class="d-block w-100 rounded my-2">
                         </div>
                       </div>
                       <div class="row">
                         <div class="col-lg-6">
                           <span class="text-muted small pt-2 ps-1" id="like-count-{{ $post->id }}">{{ $post->likers->count() }} Likes</span>
-                          <span class="text-muted small pt-2 ps-1">{{ $post->offer_count }} Offers</span>
+                          <span class="text-muted small pt-2 ps-1">{{ $post->offers->count() }} Offers</span>
                         </div>
                       </div>
+
                       <div class="row">
+
                         <div class="col-lg-6">
                           <form action="/like/{{ $post->id }}" method="POST" class="like-form" data-post-id="{{ $post->id }}">
                               @csrf
@@ -109,9 +112,12 @@
                               </div>
                             </form>
                         </div>
+                        
                         <div class="col-lg-6">
                           <div class="d-grid mt-3">
-                            <button id="offer-btn-{{ $post->id }}" class="btn {{ $post->hasOffer(auth()->user()) ? 'btn-primary' : 'btn-outline-primary' }}" type="button" data-bs-toggle="modal" data-bs-target="#offerItemModal{{ $post->id }}">
+
+                            <button id="offer-btn-{{ $post->id }}" class="btn {{ $post->hasOffer(auth()->user()) ? 'btn-primary' : 'btn-outline-primary' }}" type="button" 
+                              data-bs-toggle="modal" data-bs-target="{{ $post->hasOffer(auth()->user()) ? '#offerItemShowModal'.$post->id : '#offerItemModal'.$post->id }}">
                               <i class="bi bi-briefcase"></i> {{ $post->hasOffer(auth()->user()) ? 'View Offer' : 'Offer' }}
                             </button>
 
@@ -119,7 +125,7 @@
 
                             <div class="modal fade" id="offerItemModal{{ $post->id }}" tabindex="-1" aria-labelledby="offerItemModalLabel{{ $post->id }}" aria-hidden="true">
                               <div class="modal-dialog text-dark">
-                              <div class="modal-content">
+                                <div class="modal-content">
                                   <div class="modal-header">
                                   <h5 class="modal-title" id="offerItemModalLabel{{ $post->id }}">Offer An Item</h5>
                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -146,11 +152,55 @@
                                       </div>
                                     </form>
                                   </div>
-                              </div>
+                                </div>
                               </div>
                             </div>
+
+                            <!-- Modal for Showing an offer -->
+
+                            <div class="modal fade" id="offerItemShowModal{{ $post->id }}" tabindex="-1" aria-labelledby="offerItemShowModalLabel{{ $post->id }}" aria-hidden="true">
+                              <div class="modal-dialog text-dark">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="offerItemShowModalLabel{{ $post->id }}">
+                                      Your offer for {{ substr($post->user->first_name, 0, 1) }}. {{ $post->user->last_name }}'s {{ $post->title }}
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+
+                                    @foreach($post->offers as $offer)
+                                    <div class="card info-card customers-card">
+                                      <div class="card-body">
+                                        <h5 class="card-title"><span class="text-muted small pt-2"> {{ timeElapsedString($offer->created_at) }} </span></h5>
+                                        <div class="row">
+                                          <div class="col-lg-12">
+                                            <h6>{{ $offer->title }}</h6>
+                                            <span class="text-muted small py-2 ps-1">{{ $offer->description }}</span>
+                                          </div>
+                                        </div>
+                                        <div class="row justify-content-center">
+                                          <div class="col-lg-12 mx-3"> 
+                                            <img src="{{ asset('storage/images/'. $offer->image) }}" alt="{{ $offer->title }}" class="d-block w-100 rounded my-2">
+                                          </div>
+                                        </div>
+                                        <div class="row text-center">
+                                          <div class="col-lg-12">
+                                            <span class="text-muted small pt-2 ps-1">Status: {{ $offer->status }}</span>
+                                          </div>
+                                        </div>
+                                        
+                                      </div>
+                                    </div>
+                                    @endforeach
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
                           </div>
                         </div>
+
                       </div>
                     </div>
                   </div>

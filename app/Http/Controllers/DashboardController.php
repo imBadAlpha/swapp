@@ -22,6 +22,9 @@ class DashboardController extends Controller
         $user = Auth::user();
         $posts = Post::where('user_id', '!=', Auth::id())
             ->with('user')
+            ->withCount(['offers' => function ($query) {
+                $query->where('user_id', Auth::id());
+            }])
             ->paginate(10);
         $likes = Like::get();
 

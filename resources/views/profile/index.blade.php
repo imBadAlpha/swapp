@@ -22,7 +22,7 @@
             <div class="card">
                 <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-                <img src="{{ asset('images/'. $user->profile_picture) }}" alt="Profile" class="rounded-circle">
+                <img src="{{ asset('storage/images/'. $user->profile_picture) }}" alt="Profile" class="rounded-circle">
                 <h2>{{ $user->first_name }} {{ $user->last_name }}</h2>
                 <div class="social-links mt-2">
                     <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
@@ -159,7 +159,7 @@
                         <div class="row mb-3">
                         <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                         <div class="col-md-8 col-lg-9">
-                            <img src="{{ asset('images/'. $user->profile_picture) }}" alt="Profile">
+                            <img src="{{ asset('storage/images/'. $user->profile_picture) }}" alt="Profile">
                             <div class="pt-2">
                             <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 <i class="bi bi-upload"></i>
