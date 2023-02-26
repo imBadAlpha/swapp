@@ -100,8 +100,25 @@ class OffersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $offer = Offer::findOrFail($id);
+
+        $offer->title = $request->input('title');
+        $offer->description = $request->input('description');
+        
+        if ($request->hasFile('image')) {
+            // Remove old image
+            Storage::delete($offer->image);
+            
+            // Save new image
+            $path = $request->file('image')->store('public/images');
+            $offer->image = $path;
+        }
+
+        $offer->save();
+
+        return redirect()->back()->with('success', 'Offer updated successfully.');
     }
+
 
     /**
      * Remove the specified resource from storage.

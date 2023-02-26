@@ -61,6 +61,12 @@
                   <div class="alert alert-success alert-block">
                       <strong>{{ $message }}</strong>
                   </div>
+                  <script>
+                    // Hide the alert after 5 seconds
+                    setTimeout(function() {
+                      $('.alert').fadeOut('slow');
+                    }, 5000);
+                  </script>
                 @endif
                 </div>
               </div>
@@ -171,26 +177,57 @@
 
                                     @foreach($post->offers as $offer)
                                     <div class="card info-card customers-card">
-                                      <div class="card-body">
-                                        <h5 class="card-title"><span class="text-muted small pt-2"> {{ timeElapsedString($offer->created_at) }} </span></h5>
-                                        <div class="row">
-                                          <div class="col-lg-12">
-                                            <h6>{{ $offer->title }}</h6>
-                                            <span class="text-muted small py-2 ps-1">{{ $offer->description }}</span>
+                                      <div id="offerCard{{ $offer->id }}" class="offer-card">
+                                        <div class="card-body">
+                                          <h5 class="card-title"><span class="text-muted small pt-2"> {{ timeElapsedString($offer->created_at) }} </span></h5>
+                                          <div class="row">
+                                            <div class="col-lg-12">
+                                              <h6>{{ $offer->title }}</h6>
+                                              <span class="text-muted small py-2 ps-1">{{ $offer->description }}</span>
+                                            </div>
+                                          </div>
+                                          <div class="row justify-content-center">
+                                            <div class="col-lg-12 mx-3"> 
+                                              <img src="{{ asset('storage/images/'. $offer->image) }}" alt="{{ $offer->title }}" class="d-block w-100 rounded my-2">
+                                            </div>
+                                          </div>
+                                          <div class="row text-center">
+                                            <div class="col-lg-12">
+                                              <span class="text-muted small pt-2 ps-1">Status: {{ $offer->status }}</span>
+                                            </div>
+                                          </div>
+                                          <div class="row">
+                                            <div class="editOffer col-lg-6 d-grid mt-3" data-offer-id="{{ $offer->id }}">
+                                              <button class="edit-btn btn btn-primary">Edit</button>
+                                            </div>
+                                            <div class="col-lg-6 d-grid mt-3">
+                                              <button class="btn btn-primary">Delete Offer</button>
+                                            </div>
                                           </div>
                                         </div>
-                                        <div class="row justify-content-center">
-                                          <div class="col-lg-12 mx-3"> 
-                                            <img src="{{ asset('storage/images/'. $offer->image) }}" alt="{{ $offer->title }}" class="d-block w-100 rounded my-2">
-                                          </div>
-                                        </div>
-                                        <div class="row text-center">
-                                          <div class="col-lg-12">
-                                            <span class="text-muted small pt-2 ps-1">Status: {{ $offer->status }}</span>
-                                          </div>
-                                        </div>
-                                        
                                       </div>
+                                      <form id="editOfferForm{{ $offer->id }}" class="edit-offer-form" action="{{ route('offers.update', $offer->id) }}" method="POST" enctype="multipart/form-data" style="display:none;">
+                                        @csrf
+                                        @method('PUT')
+                                        <input type="hidden" name="offer_id" value="{{ $offer->id }}">
+                                        <div class="form-group">
+                                            <label for="title">Title</label>
+                                            <input type="text" class="form-control" id="title" name="title" value="{{ $offer->title }}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="description">Description</label>
+                                            <textarea class="form-control" id="description" name="description" rows="3" required>{{ $offer->description }}</textarea>
+                                        </div>
+                                        <label for="image">Item Image</label>
+                                        <input type="file" class="form-control" name="image" value="{{ $offer->image }}"/>
+                                        
+                                        <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+                                        <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                          <button type="submit" class="btn btn-primary">Save</button>
+                                        </div>
+                                      </form>
                                     </div>
                                     @endforeach
                                   </div>

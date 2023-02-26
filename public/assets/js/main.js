@@ -321,33 +321,33 @@
 
 $(document).ready(function() {
   $('.like-form').on('submit', function(event) {
-      event.preventDefault();
-      var form = $(event.target).closest('form');
-      var postId = form.data('post-id');
-      var formData = form.serialize();
-      
-      
-      $.ajax({
-          url: '/like/' + postId + '?_=' + Date.now(),
-          type: 'POST',
-          data: formData,
-          success: function(data) {
-              // Update the button text and class based on the server response
-              if (data.liked) {
-                  form.find('button').removeClass('btn-outline-primary').addClass('btn-primary');
-                  form.find('button').html('<i class="bi bi-hand-thumbs-up"></i> Liked');
-              } else {
-                  form.find('button').removeClass('btn-primary').addClass('btn-outline-primary');
-                  form.find('button').html('<i class="bi bi-hand-thumbs-up"></i> Like');
-              }
-              
-              // Update the like count
-              $('#like-count-' + postId).text(data.likeCount + ' Likes');
-          },
-          error: function(xhr, status, error) {
-              // Handle errors
+    event.preventDefault();
+    var form = $(event.target).closest('form');
+    var postId = form.data('post-id');
+    var formData = form.serialize();
+    
+    
+    $.ajax({
+      url: '/like/' + postId + '?_=' + Date.now(),
+      type: 'POST',
+      data: formData,
+      success: function(data) {
+          // Update the button text and class based on the server response
+          if (data.liked) {
+              form.find('button').removeClass('btn-outline-primary').addClass('btn-primary');
+              form.find('button').html('<i class="bi bi-hand-thumbs-up"></i> Liked');
+          } else {
+              form.find('button').removeClass('btn-primary').addClass('btn-outline-primary');
+              form.find('button').html('<i class="bi bi-hand-thumbs-up"></i> Like');
           }
-      });
+          
+          // Update the like count
+          $('#like-count-' + postId).text(data.likeCount + ' Likes');
+      },
+      error: function(xhr, status, error) {
+          // Handle errors
+      }
+    });
   });
 });
 
@@ -382,3 +382,15 @@ $(document).on('submit', 'form.offer-form', function(e) {
   });
 });
 
+$(document).ready(function() {
+  // Listen for click on edit offer button
+  $('.edit-btn').click(function() {
+    // Hide offer card
+    var offerId = $(this).parent('.editOffer').data('offer-id');
+
+    $('#offerCard' + offerId).hide();
+    // Show edit form
+    $('#editOfferForm' + offerId).show();
+    // Fetch existing offer data
+  });
+});
