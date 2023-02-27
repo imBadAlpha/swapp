@@ -179,16 +179,16 @@
                                     <div class="card info-card customers-card">
                                       <div id="offerCard{{ $offer->id }}" class="offer-card">
                                         <div class="card-body">
-                                          <h5 class="card-title"><span class="text-muted small pt-2"> {{ timeElapsedString($offer->created_at) }} </span></h5>
+                                          <h5 class="card-title"><span class="offer-title text-muted small pt-2"> {{ timeElapsedString($offer->created_at) }} </span></h5>
                                           <div class="row">
                                             <div class="col-lg-12">
                                               <h6>{{ $offer->title }}</h6>
-                                              <span class="text-muted small py-2 ps-1">{{ $offer->description }}</span>
+                                              <span class="offer-description text-muted small py-2 ps-1">{{ $offer->description }}</span>
                                             </div>
                                           </div>
                                           <div class="row justify-content-center">
                                             <div class="col-lg-12 mx-3"> 
-                                              <img src="{{ asset('storage/images/'. $offer->image) }}" alt="{{ $offer->title }}" class="d-block w-100 rounded my-2">
+                                              <img src="{{ asset('storage/images/'. $offer->image) }}" alt="{{ $offer->title }}" class="offer-image d-block w-100 rounded my-2">
                                             </div>
                                           </div>
                                           <div class="row text-center">
@@ -206,7 +206,8 @@
                                           </div>
                                         </div>
                                       </div>
-                                      <form id="editOfferForm{{ $offer->id }}" class="edit-offer-form" action="{{ route('offers.update', $offer->id) }}" method="POST" enctype="multipart/form-data" style="display:none;">
+                                    </div>
+                                    <form id="editOfferForm{{ $offer->id }}" class="edit-offer-form" action="{{ route('offers.update', $offer->id) }}" method="POST" enctype="multipart/form-data" style="display:none;">
                                         @csrf
                                         @method('PUT')
                                         <input type="hidden" name="offer_id" value="{{ $offer->id }}">
@@ -219,16 +220,15 @@
                                             <textarea class="form-control" id="description" name="description" rows="3" required>{{ $offer->description }}</textarea>
                                         </div>
                                         <label for="image">Item Image</label>
-                                        <input type="file" class="form-control" name="image" value="{{ $offer->image }}"/>
+                                        <input type="file" class="form-control" name="image"/>
                                         
                                         <input type="hidden" name="user_id" value="{{ Auth::id() }}">
                                         <input type="hidden" name="post_id" value="{{ $post->id }}">
                                         <div class="modal-footer">
-                                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                          <button type="button" class="close-btn btn btn-secondary">Close</button>
                                           <button type="submit" class="btn btn-primary">Save</button>
                                         </div>
                                       </form>
-                                    </div>
                                     @endforeach
                                   </div>
                                 </div>

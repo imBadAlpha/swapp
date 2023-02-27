@@ -65,7 +65,7 @@ class OffersController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Offer added successfully.'
+            'message' => 'Offer added successfully.',
         ]);
     }
 
@@ -116,7 +116,13 @@ class OffersController extends Controller
 
         $offer->save();
 
-        return redirect()->back()->with('success', 'Offer updated successfully.');
+        return response()->json([
+            'success' => true,
+            'message' => 'Offer edited successfully.',
+            'title' => $offer->title,
+            'description' => $offer->description,
+            'image' => $offer->image,
+        ]);
     }
 
 
