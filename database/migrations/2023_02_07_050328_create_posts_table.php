@@ -19,8 +19,6 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->text('description');
             $table->string('image')->default('placeholder_image.jpg');
-            $table->integer('offer_count')->default(0);
-            $table->integer('like_count')->default(0);
             $table->enum('status', ['active', 'inactive', 'matched'])->default('active');
             $table->timestamps();
             
