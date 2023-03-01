@@ -392,7 +392,7 @@ $(document).ready(function () {
     });
 
     // Listen for click on edit offer button
-    $(".edit-btn").click(function () {
+    $(".edit-offer-btn").click(function () {
         // Hide offer card
         var offerId = $(this).parent(".editOffer").data("offer-id");
 
@@ -400,6 +400,46 @@ $(document).ready(function () {
         // Show edit form
         $("#editOfferForm" + offerId).show();
         // Fetch existing offer data
+    });
+
+    // Listen for cancel on confirm delete buttons
+    $(".cancel-btn").click(function () {
+        var offerId = $(this).parent(".deleteOffer").data("offer-id");
+
+        $(".confirm-label").hide();
+        $(".yes-btn").hide();
+        $(".cancel-btn").hide();
+        $("#deleteOfferForm" + offerId).hide();
+
+        $(".edit-offer-btn").show();
+        $(".delete-offer-btn").show();
+    });
+
+    // Listen for click on delete offer button
+    $(".delete-offer-btn").click(function () {
+        var offerId = $(this).parent(".deleteOffer").data("offer-id");
+
+        $(".edit-offer-btn").hide();
+        $(".delete-offer-btn").hide();
+        // Show delete form
+        $(".cancel-btn").show();
+        $(".yes-btn").show();
+        $(".confirm-label").show();
+        $("#deleteOfferForm" + offerId).show();
+    });
+
+    $('.offer-item-show-modal').on('hidden.bs.modal', function (e) {
+        // Reset the modal
+
+        $(this).find('form').trigger('reset');
+        $(this).find('.offer-card').show();
+        $(".edit-offer-btn").show();
+        $(".delete-offer-btn").show();
+
+        $(this).find('.edit-offer-form').hide();
+        $(this).find(".confirm-label").hide();
+        $(this).find(".yes-btn").hide();
+        $(this).find(".cancel-btn").hide();
     });
 });
 
@@ -431,6 +471,10 @@ $(document).on("submit", "form.offer-form", function (e) {
             $("#offer-btn-" + postID).html(
                 '<i class="bi bi-briefcase"></i> View Offer'
             );
+            $("#offer-btn-" + postID).attr(
+                "data-bs-target",
+                "#offerItemShowModal" + postID
+            );
         },
         error: function (xhr, status, error) {
             console.log(xhr.responseText);
@@ -458,17 +502,24 @@ $(document).on("submit", "form.edit-offer-form", function (e) {
         contentType: false,
         processData: false,
         success: function (data) {
-          // Update the offerCard with the updated data
-          $('#offerCard' + offerID).find('.offer-title').text(data.title);
-          $('#offerCard' + offerID).find('.offer-description').text(data.description);
-          $('#offerCard' + offerID).find('.offer-image').attr('src', data.image);
+            // Update the offerCard with the updated data
+            $("#offerCard" + offerID)
+                .find(".offer-title")
+                .text(data.title);
+            $("#offerCard" + offerID)
+                .find(".offer-description")
+                .text(data.description);
+            console.log(data.deleted);
+            $("#offerCard" + offerID)
+                .find(".offer-image")
+                .attr("src", "storage/images" + '/' + data.image);
 
-          // Hide the edit form and show the offerCard
-          $('#editOfferForm' + offerID).hide();
-          $('#offerCard' + offerID).show();
+            // Hide the edit form and show the offerCard
+            $("#editOfferForm" + offerID).hide();
+            $("#offerCard" + offerID).show();
         },
         error: function (xhr, status, error) {
-            console.log(xhr);
+            console.log(xhr.responseText);
         },
     });
 });

@@ -164,7 +164,7 @@
 
                             <!-- Modal for Showing an offer -->
 
-                            <div class="modal fade" id="offerItemShowModal{{ $post->id }}" tabindex="-1" aria-labelledby="offerItemShowModalLabel{{ $post->id }}" aria-hidden="true">
+                            <div class="offer-item-show-modal modal fade" id="offerItemShowModal{{ $post->id }}" tabindex="-1" aria-labelledby="offerItemShowModalLabel{{ $post->id }}" aria-hidden="true" data-post-id="{{ $post->id }}">
                               <div class="modal-dialog text-dark">
                                 <div class="modal-content">
                                   <div class="modal-header">
@@ -198,12 +198,25 @@
                                           </div>
                                           <div class="row">
                                             <div class="editOffer col-lg-6 d-grid mt-3" data-offer-id="{{ $offer->id }}">
-                                              <button class="edit-btn btn btn-primary">Edit</button>
+                                              <button class="edit-offer-btn btn btn-primary">Edit</button>
                                             </div>
-                                            <div class="col-lg-6 d-grid mt-3">
-                                              <button class="btn btn-primary">Delete Offer</button>
+                                            <div class="deleteOffer col-lg-6 d-grid mt-3" data-offer-id="{{ $offer->id }}">
+                                              <button class="delete-offer-btn btn btn-primary">Delete Offer</button>
                                             </div>
+                                            <span class="confirm-label text-light text-center py-2 ps-1 col-lg-12" style="display: none;">Are you sure you want to delete this offer?</span>
                                           </div>
+                                          <form id="deleteOfferForm{{ $offer->id }}" action="{{ route('offers.destroy', $offer->id) }}" method="POST" style="display: none;">
+                                              @csrf
+                                              @method('DELETE')
+                                              <div class="row">
+                                                <div class="col-lg-6 d-grid mt-3">
+                                                  <button type="submit" class="yes-btn btn btn-danger">Yes</button>
+                                                </div>
+                                                <div class="col-lg-6 d-grid mt-3">
+                                                  <button type="button" class="cancel-btn btn btn-primary">Cancel</button>
+                                                </div>
+                                              </div>
+                                          </form>
                                         </div>
                                       </div>
                                     </div>
@@ -225,7 +238,7 @@
                                         <input type="hidden" name="user_id" value="{{ Auth::id() }}">
                                         <input type="hidden" name="post_id" value="{{ $post->id }}">
                                         <div class="modal-footer">
-                                          <button type="button" class="close-btn btn btn-secondary">Close</button>
+                                          <button type="button" class="close-btn btn btn-secondary">Cancel</button>
                                           <button type="submit" class="btn btn-primary">Save</button>
                                         </div>
                                       </form>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Offer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 require_once(app_path().'/helpers.php');
 
 class OffersController extends Controller
@@ -107,11 +108,13 @@ class OffersController extends Controller
         
         if ($request->hasFile('image')) {
             // Remove old image
-            Storage::delete($offer->image);
+            $deleted = $offer->image;
+            unlink(storage_path('app/public/images/'.$offer->image));
             
             // Save new image
-            $path = $request->file('image')->store('public/images');
-            $offer->image = $path;
+            $imageName = time().'.'.$request->image->extension();
+            $request->image->storeAs('public/images', $imageName);
+            $offer->image = $imageName;
         }
 
         $offer->save();
@@ -122,6 +125,7 @@ class OffersController extends Controller
             'title' => $offer->title,
             'description' => $offer->description,
             'image' => $offer->image,
+            'deleted' => $deleted,
         ]);
     }
 
