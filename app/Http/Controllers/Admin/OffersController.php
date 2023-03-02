@@ -138,6 +138,9 @@ class OffersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $offer = Offer::findOrFail($id);
+        unlink(storage_path('app/public/images/'.$offer->image));
+        $offer->delete();
+        return redirect()->back();
     }
 }

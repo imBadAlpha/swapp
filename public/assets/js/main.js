@@ -441,6 +441,7 @@ $(document).ready(function () {
         $(this).find(".yes-btn").hide();
         $(this).find(".cancel-btn").hide();
     });
+    
 });
 
 $(document).on("submit", "form.offer-form", function (e) {

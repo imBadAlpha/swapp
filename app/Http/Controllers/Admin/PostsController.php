@@ -113,7 +113,10 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::where('id', '=', $id);
+        unlink(storage_path('app/public/images/'.$post->image));
+        $post->delete();
+        return redirect()->back();
     }
 
 }

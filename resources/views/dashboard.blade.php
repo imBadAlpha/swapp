@@ -152,6 +152,7 @@
                                       
                                       <input type="hidden" name="user_id" value="{{ Auth::id() }}">
                                       <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                      
                                       <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                         <button type="submit" class="btn btn-primary">Offer</button>
