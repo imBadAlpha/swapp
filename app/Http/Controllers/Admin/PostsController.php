@@ -67,7 +67,7 @@ class PostsController extends Controller
 
         $post->save();
         
-        return redirect()->route('dashboard')->with('success', 'Post added successfully.');
+        return redirect()->back()->with('success', 'Post added successfully.');
     }
 
 
@@ -113,7 +113,7 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        $post = Post::where('id', '=', $id);
+        $post = Post::findOrFail($id);
         unlink(storage_path('app/public/images/'.$post->image));
         $post->delete();
         return redirect()->back();

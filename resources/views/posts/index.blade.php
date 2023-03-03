@@ -87,9 +87,39 @@
                       </div>
                       <div class="row">
                         <div class="col-lg-12"> 
-                          <img src="{{ asset('storage/images/'. $post->image) }}" alt="{{ $post->title }}" class="d-block w-100 rounded">
+                          <img src="{{ asset('storage/images/'. $post->image) }}" alt="{{ $post->title }}" class="d-block w-100 rounded my-2">
                         </div>
                       </div>
+
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <span class="text-muted small pt-2 ps-1" id="like-count-{{ $post->id }}">{{ $post->likers->count() }} Likes</span>
+                          <span class="text-muted small pt-2 ps-1">{{ $post->offers->count() }} Offers</span>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="editPost col-lg-6 d-grid mt-3" data-post-id="{{ $post->id }}">
+                          <button class="edit-post-btn btn btn-primary">Edit</button>
+                        </div>
+                        <div class="deletePost col-lg-6 d-grid mt-3" data-post-id="{{ $post->id }}">
+                          <button class="delete-post-btn btn btn-primary">Delete Post</button>
+                        </div>
+                        <span class="confirm-label-delete-post text-light text-center py-2 ps-1 col-lg-12" style="display: none;">Are you sure you want to delete this offer?</span>
+                      
+                      </div>
+                      <form id="deletePostForm{{ $post->id }}" action="post/destroy/{{ $post->id }}" method="POST" style="display: none;">
+                        @csrf
+                        @method('DELETE')
+                        <div class="row">
+                          <div class="col-lg-6 d-grid mt-3">
+                            <button type="submit" class="yes-btn btn btn-danger">Yes</button>
+                          </div>
+                          <div class="col-lg-6 d-grid mt-3">
+                            <button type="button" class="cancel-btn btn btn-primary">Cancel</button>
+                          </div>
+                        </div>
+                      </form>
                     </div>
                   </div>
     
