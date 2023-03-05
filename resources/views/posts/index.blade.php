@@ -135,25 +135,7 @@
                   {{ $posts->links() }}
                 </div>
               </div>
-
-              <script>
-                $('#per_page, #filter').on('change', function() {
-                    $('#filter-form').submit();
-                });
-            
-                $('#filter-form').on('submit', function(e) {
-                    e.preventDefault();
-            
-                    $.ajax({
-                        type: 'GET',
-                        url: '{{ route('dashboard') }}',
-                        data: $(this).serialize(),
-                        success: function(data) {
-                            $('table tbody').html(data);
-                        }
-                    });
-                });
-            </script>
+              
             </div><!-- End Left side columns -->
     
             <!-- Right side columns -->
