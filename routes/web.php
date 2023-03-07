@@ -25,7 +25,7 @@ Route::get('/', function () {
 });
 
 // Routes for Users
-Route::middleware(['auth', 'user'])->group(function () {
+Route::middleware(['auth', 'verified', 'user'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('posts', PostsController::class);
     Route::post('/like/{post}', [LikesController::class, 'like']);
@@ -40,7 +40,7 @@ Route::middleware(['auth', 'user'])->group(function () {
 });
 
 // Routes for Admin
-Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function() {
+Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.')->group(function() {
     Route::get('/dashboard', [DashboardController::class, 'index']);
     Route::resource('posts', PostsController::class);
     Route::resource('offers', OffersController::class);
