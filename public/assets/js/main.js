@@ -444,44 +444,44 @@ $(document).ready(function () {
     
 });
 
-$(document).on("submit", "form.offer-form", function (e) {
-    e.preventDefault();
-    var form = $(this);
-    var url = form.attr("action");
-    var postID = $(this).find('input[name="post_id"]').val();
-    var formData = new FormData(form[0]);
+// $(document).on("submit", "form.offer-form", function (e) {
+//     e.preventDefault();
+//     var form = $(this);
+//     var url = form.attr("action");
+//     var postID = $(this).find('input[name="post_id"]').val();
+//     var formData = new FormData(form[0]);
 
-    $.ajax({
-        url: url,
-        type: "POST",
-        data: formData,
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-        dataType: "json",
-        async: false,
-        cache: false,
-        contentType: false,
-        processData: false,
-        success: function (data) {
-            $("#offerItemModal" + postID).modal("hide"); // close the modal
-            form.trigger("reset"); // clear the form
-            $("#offer-btn-" + postID)
-                .removeClass("btn-outline-primary")
-                .addClass("btn-primary");
-            $("#offer-btn-" + postID).html(
-                '<i class="bi bi-briefcase"></i> View Offer'
-            );
-            $("#offer-btn-" + postID).attr(
-                "data-bs-target",
-                "#offerItemShowModal" + postID
-            );
-        },
-        error: function (xhr, status, error) {
-            console.log(xhr.responseText);
-        },
-    });
-});
+//     $.ajax({
+//         url: url,
+//         type: "POST",
+//         data: formData,
+//         headers: {
+//             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+//         },
+//         dataType: "json",
+//         async: false,
+//         cache: false,
+//         contentType: false,
+//         processData: false,
+//         success: function (data) {
+//             $("#offerItemModal" + postID).modal("hide"); // close the modal
+//             form.trigger("reset"); // clear the form
+//             $("#offer-btn-" + postID)
+//                 .removeClass("btn-outline-primary")
+//                 .addClass("btn-primary");
+//             $("#offer-btn-" + postID).html(
+//                 '<i class="bi bi-briefcase"></i> View Offer'
+//             );
+//             $("#offer-btn-" + postID).attr(
+//                 "data-bs-target",
+//                 "#offerItemShowModal" + postID
+//             );
+//         },
+//         error: function (xhr, status, error) {
+//             console.log(xhr.responseText);
+//         },
+//     });
+// });
 
 $(document).on("submit", "form.edit-offer-form", function (e) {
     e.preventDefault();

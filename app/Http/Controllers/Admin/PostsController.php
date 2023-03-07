@@ -116,7 +116,7 @@ class PostsController extends Controller
         $post = Post::findOrFail($id);
         unlink(storage_path('app/public/images/'.$post->image));
         $post->delete();
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Post deleted successfully!');
     }
 
 }

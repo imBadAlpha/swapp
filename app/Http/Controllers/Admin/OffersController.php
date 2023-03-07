@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Offer;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -24,7 +25,14 @@ class OffersController extends Controller
         if (auth()->user()->hasRole(1)){
             return view('admin.offers.index', compact('offers', 'user'));
         } else {
-            return view('offers.index', compact('offers', 'user'));
+            $posts = Post::where('user_id', '!=', Auth::id())
+            ->with('user')
+            ->withCount(['offers' => function ($query) {
+                $query->where('user_id', Auth::id());
+            }])
+            ->has('offers')
+            ->paginate(10);
+            return view('offers.index', compact('offers', 'posts', 'user'));
         }
     }
 
@@ -64,10 +72,7 @@ class OffersController extends Controller
 
         $offer->save();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Offer added successfully.',
-        ]);
+        return redirect()->back()->with('success', 'Offer addedd successfully');
     }
 
     /**
@@ -125,7 +130,6 @@ class OffersController extends Controller
             'title' => $offer->title,
             'description' => $offer->description,
             'image' => $offer->image,
-            'deleted' => $deleted,
         ]);
     }
 

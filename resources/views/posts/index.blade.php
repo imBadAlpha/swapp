@@ -103,10 +103,35 @@
                           <button class="edit-post-btn btn btn-primary">Edit</button>
                         </div>
                         <div class="deletePost col-lg-6 d-grid mt-3" data-post-id="{{ $post->id }}">
-                          <button class="delete-post-btn btn btn-primary">Delete Post</button>
+                          <button type="button" class="delete-post-btn btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $post->id }}">
+                            Delete Post
+                          </button>
                         </div>
+                        
                         <span class="confirm-label-delete-post text-light text-center py-2 ps-1 col-lg-12" style="display: none;">Are you sure you want to delete this offer?</span>
                       
+                      </div>
+
+                      <!-- Confirm Delete Post Modal -->
+                      <div class="modal fade" id="deleteModal{{ $post->id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ $post->id }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content text-dark">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="deleteModalLabel{{ $post->id }}">Are you sure you want to delete this Post?</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <form id="deletePostForm{{ $post->id }}" action="{{ route('posts.destroy', $post->id) }}" method="POST"">
+                                @csrf
+                                @method('DELETE')
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                  <button type="submit" class="btn btn-primary">Yes</button>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                       <form id="deletePostForm{{ $post->id }}" action="post/destroy/{{ $post->id }}" method="POST" style="display: none;">
                         @csrf
