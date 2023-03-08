@@ -102,7 +102,25 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = Post::findOrFail($id);
+
+        $post->title = $request->input('title');
+        $post->description = $request->input('description');
+        
+        if ($request->hasFile('image')) {
+            // Remove old image
+            $deleted = $post->image;
+            unlink(storage_path('app/public/images/'.$post->image));
+            
+            // Save new image
+            $imageName = time().'.'.$request->image->extension();
+            $request->image->storeAs('public/images', $imageName);
+            $post->image = $imageName;
+        }
+
+        $post->save();
+
+        return redirect()->back()->with('success', 'Edited Successfully!');
     }
 
     /**

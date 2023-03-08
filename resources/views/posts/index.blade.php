@@ -59,6 +59,12 @@
                   <div class="alert alert-success alert-block">
                       <strong>{{ $message }}</strong>
                   </div>
+                  <script>
+                    // Hide the alert after 5 seconds
+                    setTimeout(function() {
+                      $('.alert').fadeOut('slow');
+                    }, 5000);
+                  </script>
                 @endif
                 </div>
               </div>
@@ -100,7 +106,9 @@
 
                       <div class="row">
                         <div class="editPost col-lg-6 d-grid mt-3" data-post-id="{{ $post->id }}">
-                          <button class="edit-post-btn btn btn-primary">Edit</button>
+                          <button type="button" class="edit-post-btn btn btn-primary" data-bs-toggle="modal" data-bs-target="#editPostModal{{ $post->id }}">
+                            Edit Post
+                          </button>
                         </div>
                         <div class="deletePost col-lg-6 d-grid mt-3" data-post-id="{{ $post->id }}">
                           <button type="button" class="delete-post-btn btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $post->id }}">
@@ -117,10 +125,11 @@
                         <div class="modal-dialog">
                           <div class="modal-content text-dark">
                             <div class="modal-header">
-                              <h5 class="modal-title" id="deleteModalLabel{{ $post->id }}">Are you sure you want to delete this Post?</h5>
                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
+                              <h4 class="text-center">Are you sure you want to delete this Post?</h4>
+                              
                               <form id="deletePostForm{{ $post->id }}" action="{{ route('posts.destroy', $post->id) }}" method="POST"">
                                 @csrf
                                 @method('DELETE')
@@ -133,18 +142,43 @@
                           </div>
                         </div>
                       </div>
-                      <form id="deletePostForm{{ $post->id }}" action="post/destroy/{{ $post->id }}" method="POST" style="display: none;">
-                        @csrf
-                        @method('DELETE')
-                        <div class="row">
-                          <div class="col-lg-6 d-grid mt-3">
-                            <button type="submit" class="yes-btn btn btn-danger">Yes</button>
-                          </div>
-                          <div class="col-lg-6 d-grid mt-3">
-                            <button type="button" class="cancel-btn btn btn-primary">Cancel</button>
+
+                      <!-- Modal For Editing Post -->
+                      <div class="modal fade" id="editPostModal{{ $post->id }}" tabindex="-1" aria-labelledby="editPostModalLabel{{ $post->id }}" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content text-dark">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="editPostModalLabel{{ $post->id }}">Edit Post</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <form class="edit-post-form" action="{{ route('posts.update', $post->id) }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                @method('PUT')
+                                <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                <div class="form-group">
+                                    <label for="title">Title</label>
+                                    <input type="text" class="form-control" name="title" value="{{ $post->title }}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Description</label>
+                                    <textarea class="form-control" name="description" rows="3" required>{{ $post->description }}</textarea>
+                                </div>
+                                <label for="image">Item Image</label>
+                                <input type="file" class="form-control" name="image"/>
+                                
+                                <input type="hidden" name="user_id" value="{{ Auth::id() }}">
+                                <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                  <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                              </form>
+                            </div>
                           </div>
                         </div>
-                      </form>
+                      </div>
+
                     </div>
                   </div>
     
