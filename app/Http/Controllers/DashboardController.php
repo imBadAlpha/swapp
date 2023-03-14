@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Post;
 use App\Models\Like;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 require_once(app_path().'/helpers.php');
 
 class DashboardController extends Controller

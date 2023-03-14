@@ -4,9 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Post extends Model
 {
+    use Searchable;
     /**
      * The attributes that are mass assignable.
      *
@@ -15,6 +17,11 @@ class Post extends Model
     protected $fillable = [
         'title', 'description', 'user_id', 'offer_count', 'like_count', 'status',
     ];
+
+    public function searchableAs()
+    {
+        return 'posts';
+    }
 
     /**
      * The user that owns the post.

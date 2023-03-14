@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\PostsController;
 use App\Http\Controllers\Admin\OffersController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LikesController;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,8 @@ Route::middleware(['auth', 'verified', 'user'])->group(function () {
     Route::post('/like/{post}', [LikesController::class, 'like']);
 
     Route::resource('offers', OffersController::class);
+
+    Route::get('/search/query', [SearchController::class, 'query']);
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
