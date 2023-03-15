@@ -44,4 +44,8 @@ jobs:
         run: php artisan key:generate
 
       - name: Execute tests
+<<<<<<< HEAD
         run: ./vendor/bin/pest
+=======
+        run: vendor/bin/phpunit
+>>>>>>> parent of 5945c6b (changes in test.yml)
